@@ -2,6 +2,7 @@
 #include "SolverSupport.h"
 #include "SolverSingles.h"
 #include "Board.h"
+#include "arduino.h"
 
 bool removeNakedSingles(Board &board) {
 	uint8_t possibleValues[ELEMENTS];
@@ -39,7 +40,7 @@ bool removeHiddenSingleRow(Board &board) {
 		rowMin = row;
 		rowMax = row;
 
-		solverSupport.getNumberCountHidden(rowMin, rowMax, columnMin, columnMax);
+		solverSupport.getValueCountHidden(rowMin, rowMax, columnMin, columnMax);
 		result |= processHiddenSingle(board);
 	}
 	return result;
@@ -57,7 +58,7 @@ bool removeHiddenSingleColumn(Board &board) {
 		columnMin = column;
 		columnMax = column;
 
-		solverSupport.getNumberCountHidden(rowMin, rowMax, columnMin, columnMax);
+		solverSupport.getValueCountHidden(rowMin, rowMax, columnMin, columnMax);
 		result |= processHiddenSingle(board);
 	}
 	return result;
@@ -78,7 +79,7 @@ bool removeHiddenSingleBox(Board &board) {
 			uint8_t columnMin = column * 3;
 			uint8_t columnMax = columnMin + 2;
 
-			solverSupport.getNumberCountHidden(rowMin, rowMax, columnMin, columnMax);
+			solverSupport.getValueCountHidden(rowMin, rowMax, columnMin, columnMax);
 			result |= processHiddenSingle(board);
 		}
 	}
@@ -87,16 +88,19 @@ bool removeHiddenSingleBox(Board &board) {
 
 bool processHiddenSingle(Board &board) {
 	bool found = false;
-
+	
+	uint8_t value = 0;
 	uint8_t count = 0;
 	uint8_t row = 0;
 	uint8_t column = 0;
 
-	for(uint8_t value = 1; value <= 9; value++) {
-		count = solverSupport.numberCount[value - 1].count;
+	for(uint8_t i = 0; i < 9; i++) {
+		value = solverSupport.valueCount[i].value;
+		count = solverSupport.valueCount[i].count;
+		
 		if(count == 1) {
-			row = solverSupport.numberCount[value - 1].location[0].row;
-			column = solverSupport.numberCount[value - 1].location[0].column;
+			row = solverSupport.valueCount[i].location[0].row;
+			column = solverSupport.valueCount[i].location[0].column;
 
 			board.setValue(value, row, column);
 			found = true;

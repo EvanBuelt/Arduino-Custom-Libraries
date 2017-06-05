@@ -34,8 +34,8 @@ bool removeNakedDoubleRow(Board &board) {
 	bool removed = false;
 
 	for(uint8_t row = 0; row < 9; row++) {
-		solverSupport.getNumberCountNaked(2, 2, row, row, 0, 8);
-		solverSupport.processNumberCountIntoValueCount(2, 9);
+		solverSupport.getValueCountNaked(2, 2, row, row, 0, 8);
+		solverSupport.filterValueCount(2, 9);
 		processHiddenDouble(board);
 	}
 	return removed;
@@ -44,8 +44,8 @@ bool removeNakedDoubleColumn(Board &board) {
 	bool removed = false;
 
 	for(uint8_t column = 0; column < 9; column++) {
-		solverSupport.getNumberCountNaked(2, 2, 0, 8, column, column);
-		solverSupport.processNumberCountIntoValueCount(2, 9);
+		solverSupport.getValueCountNaked(2, 2, 0, 8, column, column);
+		solverSupport.filterValueCount(2, 9);
 		processHiddenDouble(board);
 	}
 	return removed;
@@ -66,8 +66,8 @@ bool removeNakedDoubleBox(Board &board) {
 			uint8_t columnMin = column * 3;
 			uint8_t columnMax = columnMin + 2;
 
-			solverSupport.getNumberCountNaked(2, 2, rowMin, rowMax, columnMin, columnMax);
-			solverSupport.processNumberCountIntoValueCount(2, 9);
+			solverSupport.getValueCountNaked(2, 2, rowMin, rowMax, columnMin, columnMax);
+			solverSupport.filterValueCount(2, 9);
 			processHiddenDouble(board);
 		}
 	}
@@ -78,8 +78,8 @@ bool removeHiddenDoubleRow(Board &board) {
 	bool removed = false;
 
 	for(uint8_t row = 0; row < 9; row++) {
-		solverSupport.getNumberCountHidden(row, row, 0, 8);
-		solverSupport.processNumberCountIntoValueCount(2, 2);
+		solverSupport.getValueCountHidden(row, row, 0, 8);
+		solverSupport.filterValueCount(2, 2);
 		processHiddenDouble(board);
 	}
 	return removed;
@@ -88,8 +88,8 @@ bool removeHiddenDoubleColumn(Board &board) {
 	bool removed = false;
 
 	for(uint8_t column = 0; column < 9; column++) {
-		solverSupport.getNumberCountHidden(0, 8, column, column);
-		solverSupport.processNumberCountIntoValueCount(2, 2);
+		solverSupport.getValueCountHidden(0, 8, column, column);
+		solverSupport.filterValueCount(2, 2);
 		processHiddenDouble(board);
 	}
 	return removed;
@@ -110,8 +110,8 @@ bool removeHiddenDoubleBox(Board &board) {
 			uint8_t columnMin = column * 3;
 			uint8_t columnMax = columnMin + 2;
 
-			solverSupport.getNumberCountHidden(rowMin, rowMax, columnMin, columnMax);
-			solverSupport.processNumberCountIntoValueCount(2, 2);
+			solverSupport.getValueCountHidden(rowMin, rowMax, columnMin, columnMax);
+			solverSupport.filterValueCount(2, 2);
 			processHiddenDouble(board);
 		}
 	}

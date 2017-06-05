@@ -22,7 +22,7 @@ private:
 	Board *board;
 
 	Location commonLocation[ELEMENTS];
-	NumberLocationCount numberCount[ELEMENTS]; // When proccessing Hidden values, there are only 9 Cells and 9 Values to process at a time.  
+	ValueLocationCount numberCount[ELEMENTS]; // When proccessing Hidden values, there are only 9 Cells and 9 Values to process at a time.  
 	ValueLocationCount valueCount[ELEMENTS]; 
 	uint8_t possibleValues[ELEMENTS];
 
@@ -44,8 +44,6 @@ private:
 	bool removeHiddenQuadBox();
 
 	// Utility Functions for hidden x
-	bool processHiddenDoubles();
-	bool processPointingDoubles();
 	bool processHiddenTriples();
 	bool processPointingTriples();
 	bool processHiddenQuads();
